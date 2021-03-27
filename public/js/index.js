@@ -10,6 +10,12 @@ $(document).ready(function () {
       sendPosition(data, socket)
     );
   });
+
+  $('#registerForm').on('submit', (e) => {
+    e.preventDefault();
+    const id = $('#registerEmail').val();
+    socket.emit('connectUser', { id: id });
+  });
 });
 
 const sendPosition = (data, socket) => {
