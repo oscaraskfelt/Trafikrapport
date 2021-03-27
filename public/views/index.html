@@ -4,17 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Backend challenge</title>
+
+    <link rel="stylesheet" href="../style/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body>
-    <h1>Hej</h1>
+    <h1 class="text">Hej</h1>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-      var socket = io();
-
-      socket.on('message', (msg) => {
-        console.log(msg);
-      });
-    </script>
+    <script src="../js/index.js"></script>
   </body>
 </html>

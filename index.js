@@ -1,17 +1,19 @@
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+const express = require('express');
 
-const app = require('express')();
+const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res, next) => {
-  res.status(200).sendFile(path.join(__dirname + '/views/index.html'));
+  res.status(200).sendFile(path.join(__dirname + '/public/views/index.html'));
 });
 
 io.on('connection', (socket) => {
@@ -19,6 +21,12 @@ io.on('connection', (socket) => {
 
   io.emit('message', {
     data: 'example data',
+  });
+
+  io.emit('getPos');
+
+  socket.on('pos', (data) => {
+    console.log(data);
   });
 
   socket.on('disconnect', () => {
