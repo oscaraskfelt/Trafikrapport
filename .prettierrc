@@ -1,0 +1,7 @@
+{
+  "semi": true,
+  "editorconfig": true,
+  "singleQuote": true,
+  "quoteProps": "consistent",
+  "trailingComma": "es5"
+}
