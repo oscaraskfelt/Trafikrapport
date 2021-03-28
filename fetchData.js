@@ -7,15 +7,21 @@ module.exports.getReports = async (lat, lon, messageClient) => {
     )
     .then((res) => {
       const trafficArea = res.data.area.name;
-      return axios
-        .get(
-          `http://api.sr.se/api/v2/traffic/messages?trafficareaname=${trafficArea}&format=json`
-        )
-        .then((res) => {
-          messageClient(res.data);
+      const url = `http://api.sr.se/api/v2/traffic/messages`;
+      return axios({
+        method: 'GET',
+        url: url,
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8;',
+          'Access-Control-Allow-Origin': '*',
+        },
+        params: { trafficareaname: trafficArea, format: 'json' },
+      })
+        .then((response) => {
+          messageClient(response.data);
         })
         .catch((error) => {
-          console.log(error);
+          console.warn(error);
         });
     })
     .catch((error) => {
