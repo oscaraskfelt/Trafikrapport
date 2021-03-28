@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+const cron = require('node-cron');
 const express = require('express');
 
 const fetchData = require('./fetchData');
@@ -54,6 +55,10 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('disconnected: ', socket.id);
   });
+});
+
+cron.schedule('* * 3 * * *', () => {
+  db.purgeUsers();
 });
 
 const port = process.env.PORT || 5000;

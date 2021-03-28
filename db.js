@@ -20,6 +20,8 @@ const readFromFile = () => {
 
 const addUser = (newUser) => {
   const users = readFromFile();
+  newUser.date = new Date();
+
   let exists = false;
   for (let i = 0; i < users.length; i++) {
     if (users[i].id == newUser.id) {
@@ -33,7 +35,6 @@ const addUser = (newUser) => {
 };
 
 const registerUser = (users, user) => {
-  user.date = new Date();
   users.push(user);
   writeToFile(users);
 };
@@ -47,4 +48,16 @@ const removeUser = (oldUser) => {
   } else return false;
 };
 
-module.exports = { addUser, removeUser };
+const purgeUsers = () => {
+  const users = readFromFile();
+
+  const filteredUsers = users.filter(
+    (user) => Math.abs(new Date(user.date) - new Date()) / 36e5 < 24
+  );
+  if (filteredUsers.length != users.length) {
+    writeToFile(filteredUsers);
+    return true;
+  } else return false;
+};
+
+module.exports = { addUser, removeUser, purgeUsers };
