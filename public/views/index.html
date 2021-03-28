@@ -10,13 +10,25 @@
   </head>
   <body>
     <h1 class="text">Hej</h1>
-    <form id="registerForm">
-      <input id="registerEmail" type="text" placeholder="Räcker med epost" />
-      <input type="submit" value="registrera" />
+    <form id="registerForm" action="/reports" method="POST">
+      <input
+        id="registerEmail"
+        name="email"
+        type="text"
+        placeholder="Räcker med epost"
+      />
+      <input type="submit" value="Registrera/Logga in" />
     </form>
-    <div id="reports"></div>
+    <form id="removeForm" action="/reports" method="POST">
+      <input
+        id="removeEmail"
+        name="email"
+        type="text"
+        placeholder="Din epost"
+      />
+      <input type="submit" value="Avregistrera" />
+    </form>
 
-    <script src="/socket.io/socket.io.js"></script>
     <script src="../js/index.js"></script>
   </body>
 </html>
