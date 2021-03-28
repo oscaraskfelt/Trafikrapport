@@ -20,11 +20,16 @@ const readFromFile = () => {
 
 const addUser = (newUser) => {
   const users = readFromFile();
-  if (users.some((user) => user.id == newUser.id)) {
-    //Add socket.id to user
-  } else {
-    registerUser(users, newUser);
+  let exists = false;
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].id == newUser.id) {
+      //update oldUser with newUser
+      users[i] = newUser;
+      writeToFile(users);
+      exists = true;
+    }
   }
+  if (!exists) registerUser(users, newUser);
 };
 
 const registerUser = (users, user) => {
@@ -36,7 +41,10 @@ const registerUser = (users, user) => {
 const removeUser = (oldUser) => {
   const users = readFromFile();
   const filteredUsers = users.filter((user) => user.id != oldUser.id);
-  if (filteredUsers.length != users.length) writeToFile(filteredUsers);
+  if (filteredUsers.length != users.length) {
+    writeToFile(filteredUsers);
+    return true;
+  } else return false;
 };
 
 module.exports = { addUser, removeUser };
