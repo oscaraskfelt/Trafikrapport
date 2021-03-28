@@ -33,7 +33,8 @@ const registerUser = (users, user) => {
   writeToFile(users);
 };
 
-const removeUser = (users, oldUser) => {
+const removeUser = (oldUser) => {
+  const users = readFromFile();
   const filteredUsers = users.filter((user) => user.id != oldUser.id);
   if (filteredUsers.length != users.length) writeToFile(filteredUsers);
 };
