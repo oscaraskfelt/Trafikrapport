@@ -15,6 +15,7 @@ $(document).ready(function () {
     } else {
       htmlString = 'Inga rapporter att rapportera! ';
     }
+    $('.loader').remove();
     $('#reports').empty();
     $('#reports').append(htmlString);
   });
