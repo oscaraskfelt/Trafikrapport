@@ -9,7 +9,6 @@ $(document).ready(function () {
         id
       )
     ) {
-      console.log('fail');
       e.preventDefault();
       $('#registerForm').append(
         '<p class="error">Det måste vara en giltig e-post</p>'

@@ -35,12 +35,14 @@ const sendPosition = (data, socket) => {
 
 const reportBuilder = (report) => {
   return `
-  <hr/>
-  <div>
-    <p>titel: ${report.title}</p>
-    <p>prio: ${report.priority}</p>
-    <p>plats: ${report.exactlocation}</p>
-    <p>beskrivning: ${report.description}</p>
-    <p>kategori: ${report.subcategory}</p>
+  <div class="report">
+    <h3>${report.title}</h3>
+    <p>Prio: ${report.priority}</p>
+    <p>Plats: ${report.exactlocation}</p>
+    <div>
+      <p>Beskrivning:</p>
+      <p>${report.description}</p>
+    </div>
+    <p>Kategori: ${report.subcategory}</p>
   </div>`;
 };
