@@ -3,6 +3,8 @@ const cors = require('cors');
 const path = require('path');
 const express = require('express');
 
+const fetchData = require('./fetchData');
+
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
@@ -19,14 +21,17 @@ app.get('/', (req, res, next) => {
 io.on('connection', (socket) => {
   console.log('connected');
 
-  io.emit('message', {
-    data: 'example data',
-  });
-
   io.emit('getPos');
 
+  const messageClient = (data) => {
+    io.emit('message', {
+      data: data,
+      ok: 'ok',
+    });
+  };
+
   socket.on('pos', (data) => {
-    console.log(data);
+    fetchData.getReports(data.lat, data.lon, messageClient);
   });
 
   socket.on('disconnect', () => {
