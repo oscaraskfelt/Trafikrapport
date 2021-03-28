@@ -4,6 +4,7 @@ const path = require('path');
 const express = require('express');
 
 const fetchData = require('./fetchData');
+const db = require('./db');
 
 const app = express();
 const http = require('http').createServer(app);
@@ -18,24 +19,40 @@ app.get('/', (req, res, next) => {
   res.status(200).sendFile(path.join(__dirname + '/public/views/index.html'));
 });
 
+app.post('/reports', (req, res, next) => {
+  db.addUser({ id: req.body.email });
+  res.status(200).sendFile(path.join(__dirname + '/public/views/reports.html'));
+});
+
+app.post('/removeUser', (req, res, next) => {
+  const success = db.removeUser({ id: req.body.id });
+  if (success) res.status(200).send('Bortagen');
+  else res.status(404).send('Fanns inte');
+});
+
 io.on('connection', (socket) => {
-  console.log('connected');
+  socket.join(socket.id);
+  console.log('connected: ', socket.id);
 
   io.emit('getPos');
-
-  const messageClient = (data) => {
-    io.emit('message', {
-      data: data,
-      ok: 'ok',
-    });
-  };
 
   socket.on('pos', (data) => {
     fetchData.getReports(data.lat, data.lon, messageClient);
   });
 
+  const messageClient = (data) => {
+    io.to(socket.id).emit('message', {
+      data: data,
+    });
+  };
+
+  socket.on('connectUser', (user) => {
+    user.socketId = socket.id;
+    db.addUser(user);
+  });
+
   socket.on('disconnect', () => {
-    console.log('disconnected');
+    console.log('disconnected: ', socket.id);
   });
 });
 
