@@ -33,9 +33,11 @@ app.post('/removeUser', (req, res, next) => {
 
 io.on('connection', (socket) => {
   socket.join(socket.id);
-  console.log('connected: ', socket.id);
 
-  io.emit('getPos');
+  //Gets updated position on an intervall of 10 min (600000ms)
+  const getPosInterval = setInterval(() => {
+    io.emit('getPos');
+  }, 600000);
 
   socket.on('pos', (data) => {
     fetchData.getReports(data.lat, data.lon, messageClient);
@@ -53,7 +55,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log('disconnected: ', socket.id);
+    clearInterval(getPosInterval);
   });
 });
 
