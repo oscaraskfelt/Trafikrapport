@@ -9,25 +9,29 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body>
-    <h1 class="text">Hej</h1>
-    <form id="registerForm" action="/reports" method="POST">
-      <input
-        id="registerEmail"
-        name="email"
-        type="text"
-        placeholder="Räcker med epost"
-      />
-      <input type="submit" value="Registrera/Logga in" />
-    </form>
-    <form id="removeForm" action="/reports" method="POST">
-      <input
-        id="removeEmail"
-        name="email"
-        type="text"
-        placeholder="Din epost"
-      />
-      <input type="submit" value="Avregistrera" />
-    </form>
+    <div class="container">
+      <h1 class="h1">Traffikrapporten</h1>
+      <form id="registerForm" action="/reports" method="POST" class="indexForm">
+        <label for="registerEmail">Registrera eller logga in</label>
+        <input
+          id="registerEmail"
+          name="email"
+          type="text"
+          placeholder="Räcker med epost"
+        />
+        <input type="submit" value="Registrera/Logga in" />
+      </form>
+      <form id="removeForm" action="/reports" method="POST" class="indexForm">
+        <label for="removeEmail">Avregistrera e-post</label>
+        <input
+          id="removeEmail"
+          name="email"
+          type="text"
+          placeholder="Avregistrera epost"
+        />
+        <input type="submit" value="Avregistrera" />
+      </form>
+    </div>
 
     <script src="../js/index.js"></script>
   </body>
