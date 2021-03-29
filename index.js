@@ -5,7 +5,7 @@ const cron = require('node-cron');
 const express = require('express');
 
 const fetchData = require('./fetchData');
-const db = require('./db');
+const db = require('./db/db');
 
 const app = express();
 const http = require('http').createServer(app);

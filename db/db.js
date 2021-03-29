@@ -2,13 +2,13 @@ const fs = require('fs');
 
 const writeToFile = (data) => {
   let JSONdata = JSON.stringify(data);
-  fs.writeFileSync('users.json', JSONdata);
+  fs.writeFileSync('db/users.json', JSONdata);
 };
 
 const readFromFile = () => {
   let users;
   try {
-    const data = fs.readFileSync('users.json');
+    const data = fs.readFileSync('db/users.json');
     users = JSON.parse(data);
   } catch (error) {
     users = [];
