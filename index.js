@@ -34,10 +34,12 @@ app.post('/removeUser', (req, res, next) => {
 io.on('connection', (socket) => {
   socket.join(socket.id);
 
-  //Gets updated position on an intervall of 10 min (600000ms)
-  const getPosInterval = setInterval(() => {
-    io.emit('getPos');
-  }, 600000);
+  io.to(socket.id).emit('getPos');
+
+  //scheduled to run every 10 minutes, but needs more work
+  // cron.schedule('0 */10 * * * *', () => {
+  //   io.to(socket.id).emit('getPos');
+  // });
 
   socket.on('pos', (data) => {
     fetchData.getReports(data.lat, data.lon, messageClient);
@@ -52,10 +54,6 @@ io.on('connection', (socket) => {
   socket.on('connectUser', (user) => {
     user.socketId = socket.id;
     db.addUser(user);
-  });
-
-  socket.on('disconnect', () => {
-    clearInterval(getPosInterval);
   });
 });
 
